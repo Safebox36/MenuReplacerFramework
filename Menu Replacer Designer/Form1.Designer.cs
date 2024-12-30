@@ -30,6 +30,14 @@
 		{
 			propsAll = new PropertyGrid();
 			pnlMenu = new Panel();
+			flowMenuOptions = new FlowLayoutPanel();
+			pnlMenuOption1 = new Panel();
+			pnlMenuOption2 = new Panel();
+			pnlMenuOption3 = new Panel();
+			pnlMenuOption4 = new Panel();
+			pnlMenuOption5 = new Panel();
+			pnlMenuOption6 = new Panel();
+			pnlLogo = new Panel();
 			mnuStrip = new MenuStrip();
 			mnuFile = new ToolStripMenuItem();
 			mnuNewMenu = new ToolStripMenuItem();
@@ -39,6 +47,8 @@
 			mnuEdit = new ToolStripMenuItem();
 			mnuUndo = new ToolStripMenuItem();
 			mnuRedo = new ToolStripMenuItem();
+			pnlMenu.SuspendLayout();
+			flowMenuOptions.SuspendLayout();
 			mnuStrip.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -57,11 +67,106 @@
 			// 
 			pnlMenu.BackgroundImage = Properties.Resources.menu_background;
 			pnlMenu.BackgroundImageLayout = ImageLayout.Stretch;
-			pnlMenu.BorderStyle = BorderStyle.FixedSingle;
+			pnlMenu.Controls.Add(flowMenuOptions);
+			pnlMenu.Controls.Add(pnlLogo);
 			pnlMenu.Location = new Point(12, 27);
 			pnlMenu.Name = "pnlMenu";
 			pnlMenu.Size = new Size(640, 360);
 			pnlMenu.TabIndex = 1;
+			// 
+			// flowMenuOptions
+			// 
+			flowMenuOptions.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			flowMenuOptions.AutoSize = true;
+			flowMenuOptions.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+			flowMenuOptions.BackColor = Color.Transparent;
+			flowMenuOptions.Controls.Add(pnlMenuOption1);
+			flowMenuOptions.Controls.Add(pnlMenuOption2);
+			flowMenuOptions.Controls.Add(pnlMenuOption3);
+			flowMenuOptions.Controls.Add(pnlMenuOption4);
+			flowMenuOptions.Controls.Add(pnlMenuOption5);
+			flowMenuOptions.Controls.Add(pnlMenuOption6);
+			flowMenuOptions.FlowDirection = FlowDirection.TopDown;
+			flowMenuOptions.Location = new Point(190, 31);
+			flowMenuOptions.Name = "flowMenuOptions";
+			flowMenuOptions.Size = new Size(256, 300);
+			flowMenuOptions.TabIndex = 1;
+			// 
+			// pnlMenuOption1
+			// 
+			pnlMenuOption1.Anchor = AnchorStyles.Top;
+			pnlMenuOption1.BackColor = Color.Transparent;
+			pnlMenuOption1.Location = new Point(68, 0);
+			pnlMenuOption1.Margin = new Padding(0);
+			pnlMenuOption1.Name = "pnlMenuOption1";
+			pnlMenuOption1.Size = new Size(120, 50);
+			pnlMenuOption1.TabIndex = 3;
+			pnlMenuOption1.Paint += pnlMenuOption_Paint;
+			// 
+			// pnlMenuOption2
+			// 
+			pnlMenuOption2.Anchor = AnchorStyles.Top;
+			pnlMenuOption2.BackColor = Color.Transparent;
+			pnlMenuOption2.Location = new Point(68, 50);
+			pnlMenuOption2.Margin = new Padding(0);
+			pnlMenuOption2.Name = "pnlMenuOption2";
+			pnlMenuOption2.Size = new Size(120, 50);
+			pnlMenuOption2.TabIndex = 4;
+			pnlMenuOption2.Paint += pnlMenuOption_Paint;
+			// 
+			// pnlMenuOption3
+			// 
+			pnlMenuOption3.Anchor = AnchorStyles.Top;
+			pnlMenuOption3.BackColor = Color.Transparent;
+			pnlMenuOption3.Location = new Point(68, 100);
+			pnlMenuOption3.Margin = new Padding(0);
+			pnlMenuOption3.Name = "pnlMenuOption3";
+			pnlMenuOption3.Size = new Size(120, 50);
+			pnlMenuOption3.TabIndex = 5;
+			pnlMenuOption3.Paint += pnlMenuOption_Paint;
+			// 
+			// pnlMenuOption4
+			// 
+			pnlMenuOption4.Anchor = AnchorStyles.Top;
+			pnlMenuOption4.BackColor = Color.Transparent;
+			pnlMenuOption4.Location = new Point(0, 150);
+			pnlMenuOption4.Margin = new Padding(0);
+			pnlMenuOption4.Name = "pnlMenuOption4";
+			pnlMenuOption4.Size = new Size(256, 50);
+			pnlMenuOption4.TabIndex = 6;
+			pnlMenuOption4.Paint += pnlMenuOption4_Paint;
+			// 
+			// pnlMenuOption5
+			// 
+			pnlMenuOption5.Anchor = AnchorStyles.Top;
+			pnlMenuOption5.BackColor = Color.Transparent;
+			pnlMenuOption5.Location = new Point(68, 200);
+			pnlMenuOption5.Margin = new Padding(0);
+			pnlMenuOption5.Name = "pnlMenuOption5";
+			pnlMenuOption5.Size = new Size(120, 50);
+			pnlMenuOption5.TabIndex = 6;
+			pnlMenuOption5.Paint += pnlMenuOption_Paint;
+			// 
+			// pnlMenuOption6
+			// 
+			pnlMenuOption6.Anchor = AnchorStyles.Top;
+			pnlMenuOption6.BackColor = Color.Transparent;
+			pnlMenuOption6.Location = new Point(68, 250);
+			pnlMenuOption6.Margin = new Padding(0);
+			pnlMenuOption6.Name = "pnlMenuOption6";
+			pnlMenuOption6.Size = new Size(120, 50);
+			pnlMenuOption6.TabIndex = 7;
+			pnlMenuOption6.Paint += pnlMenuOption_Paint;
+			// 
+			// pnlLogo
+			// 
+			pnlLogo.BackColor = Color.Transparent;
+			pnlLogo.Location = new Point(41, 31);
+			pnlLogo.Name = "pnlLogo";
+			pnlLogo.Size = new Size(1024, 256);
+			pnlLogo.TabIndex = 2;
+			pnlLogo.Visible = false;
+			pnlLogo.Paint += pnlLogo_Paint;
 			// 
 			// mnuStrip
 			// 
@@ -147,6 +252,9 @@
 			MainMenuStrip = mnuStrip;
 			Name = "Form1";
 			Text = "Form1";
+			pnlMenu.ResumeLayout(false);
+			pnlMenu.PerformLayout();
+			flowMenuOptions.ResumeLayout(false);
 			mnuStrip.ResumeLayout(false);
 			mnuStrip.PerformLayout();
 			ResumeLayout(false);
@@ -166,5 +274,13 @@
 		private ToolStripMenuItem mnuEdit;
 		private ToolStripMenuItem mnuUndo;
 		private ToolStripMenuItem mnuRedo;
+		private FlowLayoutPanel flowMenuOptions;
+		private Panel pnlLogo;
+		private Panel pnlMenuOption1;
+		private Panel pnlMenuOption2;
+		private Panel pnlMenuOption3;
+		private Panel pnlMenuOption4;
+		private Panel pnlMenuOption5;
+		private Panel pnlMenuOption6;
 	}
 }
