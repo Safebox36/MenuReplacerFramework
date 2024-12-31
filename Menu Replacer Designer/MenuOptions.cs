@@ -9,127 +9,77 @@ namespace Menu_Replacer_Designer
 {
 	internal class MenuOptions
 	{
+		internal class Option
+		{
+			private Bitmap? img;
+			private Bitmap? imgOver;
+			private Padding border;
+			private int width = 120;
+			private int height = 50;
+			private float scale = 1.0f;
 
-		private Bitmap? imgOpt1;
-		private Bitmap? imgOpt2;
-		private Bitmap? imgOpt3;
-		private Bitmap? imgOpt4;
-		private Bitmap? imgOpt5;
-		private Bitmap? imgOpt6;
-		private Bitmap? imgOverOpt1;
-		private Bitmap? imgOverOpt2;
-		private Bitmap? imgOverOpt3;
-		private Bitmap? imgOverOpt4;
-		private Bitmap? imgOverOpt5;
-		private Bitmap? imgOverOpt6;
-		private Padding borderOpt1;
-		private Padding borderOpt2;
-		private Padding borderOpt3;
-		private Padding borderOpt4;
-		private Padding borderOpt5;
-		private Padding borderOpt6;
-		private float widthOpt1 = 120.0f;
-		private float heightOpt1 = 50.0f;
-		private float widthOpt2 = 120.0f;
-		private float heightOpt2 = 50.0f;
-		private float scaleOpt1 = 1.0f;
-		private float scaleOpt2 = 1.0f;
-		private float scaleOpt3 = 1.0f;
-		private float scaleOpt4 = 1.0f;
-		private float scaleOpt5 = 1.0f;
-		private float scaleOpt6 = 1.0f;
+			private Bitmap defaultImg;
+			private Bitmap defaultImgOver;
 
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for New Game button.")]
-		public Bitmap ImageNewGame { get => imgOpt1 ?? Properties.Resources.menu_option; set => imgOpt1 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Load Game button.")]
-		public Bitmap ImageLoadGame { get => imgOpt2 ?? Properties.Resources.menu_option; set => imgOpt2 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Options button.")]
-		public Bitmap ImageOptions { get => imgOpt3 ?? Properties.Resources.menu_option; set => imgOpt3 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Mod Config button.")]
-		public Bitmap ImageModConfig { get => imgOpt4 ?? Properties.Resources.menu_mwse; set => imgOpt4 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Credits button.")]
-		public Bitmap ImageCredits { get => imgOpt5 ?? Properties.Resources.menu_option; set => imgOpt5 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Exit Game button.")]
-		public Bitmap ImageExitGame { get => imgOpt6 ?? Properties.Resources.menu_option; set => imgOpt6 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for New Game button when hovered over.")]
-		public Bitmap ImageOverNewGame { get => imgOverOpt1 ?? Properties.Resources.menu_option_over; set => imgOverOpt1 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Load Game button when hovered over.")]
-		public Bitmap ImageOverLoadGame { get => imgOverOpt2 ?? Properties.Resources.menu_option_over; set => imgOverOpt2 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Options button when hovered over.")]
-		public Bitmap ImageOverOptions { get => imgOverOpt3 ?? Properties.Resources.menu_option_over; set => imgOverOpt3 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Mod Config button when hovered over.")]
-		public Bitmap ImageOverModConfig { get => imgOverOpt4 ?? Properties.Resources.menu_mwse_over; set => imgOverOpt4 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Credits button when hovered over.")]
-		public Bitmap ImageOverCredits { get => imgOverOpt5 ?? Properties.Resources.menu_option_over; set => imgOverOpt5 = value; }
-		[DefaultValue(typeof(Bitmap), "")]
-		[Category(" ")]
-		[Description("The image for Exit Game button when hovered over.")]
-		public Bitmap ImageOverExitGame { get => imgOverOpt6 ?? Properties.Resources.menu_option_over; set => imgOverOpt6 = value; }
-		[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
-		[Category("--- Options")]
-		[Description("The border around New Game button.")]
-		public Padding BorderNewGame { get => borderOpt1; set => borderOpt1 = value; }
-		[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
-		[Category("--- Options")]
-		[Description("The border around Load Game button.")]
-		public Padding BorderLoadGame { get => borderOpt2; set => borderOpt2 = value; }
-		[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
-		[Category("--- Options")]
-		[Description("The border around Options button.")]
-		public Padding BorderOptions { get => borderOpt3; set => borderOpt3 = value; }
-		[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
-		[Category("--- Options")]
-		[Description("The border around Mod Config button.")]
-		public Padding BorderModConfig { get => borderOpt4; set => borderOpt4 = value; }
-		[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
-		[Category("--- Options")]
-		[Description("The border around Credits button.")]
-		public Padding BorderCredits { get => borderOpt5; set => borderOpt5 = value; }
-		[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
-		[Category("--- Options")]
-		[Description("The border around Exit Game button.")]
-		public Padding BorderExitGame { get => borderOpt6; set => borderOpt6 = value; }
-		[DefaultValue(1.0f)]
-		[Description("The scale of the New Game button.")]
-		public float ScaleNewGame { get => scaleOpt1; set => scaleOpt1 = value; }
-		[DefaultValue(1.0f)]
-		[Description("The scale of the Load Game button.")]
-		public float ScaleLoadGame { get => scaleOpt2; set => scaleOpt2 = value; }
-		[DefaultValue(1.0f)]
-		[Description("The scale of the Options button.")]
-		public float ScaleOptions { get => scaleOpt3; set => scaleOpt3 = value; }
-		[DefaultValue(1.0f)]
-		[Description("The scale of the Mod Config button.")]
-		public float ScaleModConfig { get => scaleOpt4; set => scaleOpt4 = value; }
-		[DefaultValue(1.0f)]
-		[Description("The scale of the Credits button.")]
-		public float ScaleCredits { get => scaleOpt5; set => scaleOpt5 = value; }
-		[DefaultValue(1.0f)]
-		[Description("The scale of the Exit Game button.")]
-		public float ScaleExitGame { get => scaleOpt6; set => scaleOpt6 = value; }
+			public Option(Bitmap img, Bitmap imgOver)
+			{
+				this.defaultImg = img;
+				this.defaultImgOver = imgOver;
+			}
 
+			[DefaultValue(typeof(Bitmap), "")]
+			[Description("The image for the button.")]
+			public Bitmap Image { get => img ?? defaultImg; set => img = value; }
+			[DefaultValue(typeof(Bitmap), "")]
+			[Description("The image for the button when hovered over.")] 
+			public Bitmap ImageOver { get => imgOver ?? defaultImgOver; set => imgOver = value; }
+			[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
+			[Description("The border around the button.")] 
+			public Padding Border { get => border; set => border = value; }
+			[DefaultValue(120)]
+			[Description("The width of the button.")]
+			public int Width { get => width; set => width = value; }
+			[DefaultValue(50)]
+			[Description("The height of the button.")]
+			public int Height { get => height; set => height = value; }
+			[DefaultValue(1.0f)]
+			[Description("The scale of the button.")] 
+			public float Scale { get => scale; set => scale = value; }
+
+			public override string ToString()
+			{
+				return "";
+			}
+		}
+
+		internal class OptionModConfig : Option
+		{
+			[DefaultValue(256)]
+			public new int Width { get => base.Width; set => base.Width = value; }
+
+			public OptionModConfig(Bitmap img, Bitmap imgOver) : base(img, imgOver) { this.Width = 256; }
+		}
+
+		private Option optNewGame = new(Properties.Resources.menu_option, Properties.Resources.menu_option_over);
+		private Option optLoadGame = new(Properties.Resources.menu_option, Properties.Resources.menu_option_over);
+		private Option optOptions = new(Properties.Resources.menu_option, Properties.Resources.menu_option_over);
+		private OptionModConfig optModConfig = new(Properties.Resources.menu_mwse, Properties.Resources.menu_mwse_over);
+		private Option optCredits = new(Properties.Resources.menu_option, Properties.Resources.menu_option_over);
+		private Option optExitGame = new(Properties.Resources.menu_option, Properties.Resources.menu_option_over);
+
+		[TypeConverter(typeof(ExpandableObjectConverter))]
+		public Option NewGame { get => optNewGame; set => optNewGame = value; }
+		[TypeConverter(typeof(ExpandableObjectConverter))]
+		public Option LoadGame { get => optLoadGame; set => optLoadGame = value; }
+		[TypeConverter(typeof(ExpandableObjectConverter))]
+		public Option Options { get => optOptions; set => optOptions = value; }
+		[TypeConverter(typeof(ExpandableObjectConverter))]
+		public OptionModConfig ModConfig { get => optModConfig; set => optModConfig = value; }
+		[TypeConverter(typeof(ExpandableObjectConverter))]
+		public Option Credits { get => optCredits; set => optCredits = value; }
+		[TypeConverter(typeof(ExpandableObjectConverter))]
+		public Option ExitGame { get => optExitGame; set => optExitGame = value; }
+		
 		public override string ToString()
 		{
 			return "";
