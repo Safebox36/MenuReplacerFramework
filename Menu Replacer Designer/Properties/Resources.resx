@@ -130,6 +130,9 @@
   <data name="menu_mwse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\menu-mwse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="menu_mwse_over" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\menu-mwse-over.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="menu_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\menu-new.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -138,6 +141,9 @@
   </data>
   <data name="menu_option" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\menu-option.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menu_option_over" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\menu-option-over.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="menu_redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\menu-redo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

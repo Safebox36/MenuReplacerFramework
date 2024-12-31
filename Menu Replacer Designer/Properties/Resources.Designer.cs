@@ -103,6 +103,16 @@ namespace Menu_Replacer_Designer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap menu_mwse_over {
+            get {
+                object obj = ResourceManager.GetObject("menu_mwse_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap menu_new {
             get {
                 object obj = ResourceManager.GetObject("menu_new", resourceCulture);
@@ -126,6 +136,16 @@ namespace Menu_Replacer_Designer.Properties {
         internal static System.Drawing.Bitmap menu_option {
             get {
                 object obj = ResourceManager.GetObject("menu_option", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap menu_option_over {
+            get {
+                object obj = ResourceManager.GetObject("menu_option_over", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

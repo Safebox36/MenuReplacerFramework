@@ -58,7 +58,7 @@
 			propsAll.Margin = new Padding(3, 3, 12, 12);
 			propsAll.Name = "propsAll";
 			propsAll.PropertySort = PropertySort.Categorized;
-			propsAll.Size = new Size(213, 360);
+			propsAll.Size = new Size(256, 360);
 			propsAll.TabIndex = 0;
 			propsAll.ToolbarVisible = false;
 			propsAll.PropertyValueChanged += propsAll_PropertyValueChanged;
@@ -91,6 +91,8 @@
 			flowMenuOptions.Name = "flowMenuOptions";
 			flowMenuOptions.Size = new Size(256, 300);
 			flowMenuOptions.TabIndex = 1;
+			flowMenuOptions.WrapContents = false;
+			flowMenuOptions.Paint += flowMenuOptions_Paint;
 			// 
 			// pnlMenuOption1
 			// 
@@ -102,6 +104,8 @@
 			pnlMenuOption1.Size = new Size(120, 50);
 			pnlMenuOption1.TabIndex = 3;
 			pnlMenuOption1.Paint += pnlMenuOption_Paint;
+			pnlMenuOption1.MouseEnter += pnlMenuOption_MouseEnter;
+			pnlMenuOption1.MouseLeave += pnlMenuOption_MouseLeave;
 			// 
 			// pnlMenuOption2
 			// 
@@ -113,6 +117,8 @@
 			pnlMenuOption2.Size = new Size(120, 50);
 			pnlMenuOption2.TabIndex = 4;
 			pnlMenuOption2.Paint += pnlMenuOption_Paint;
+			pnlMenuOption2.MouseEnter += pnlMenuOption_MouseEnter;
+			pnlMenuOption2.MouseLeave += pnlMenuOption_MouseLeave;
 			// 
 			// pnlMenuOption3
 			// 
@@ -124,6 +130,8 @@
 			pnlMenuOption3.Size = new Size(120, 50);
 			pnlMenuOption3.TabIndex = 5;
 			pnlMenuOption3.Paint += pnlMenuOption_Paint;
+			pnlMenuOption3.MouseEnter += pnlMenuOption_MouseEnter;
+			pnlMenuOption3.MouseLeave += pnlMenuOption_MouseLeave;
 			// 
 			// pnlMenuOption4
 			// 
@@ -135,6 +143,8 @@
 			pnlMenuOption4.Size = new Size(256, 50);
 			pnlMenuOption4.TabIndex = 6;
 			pnlMenuOption4.Paint += pnlMenuOption4_Paint;
+			pnlMenuOption4.MouseEnter += pnlMenuOption_MouseEnter;
+			pnlMenuOption4.MouseLeave += pnlMenuOption_MouseLeave;
 			// 
 			// pnlMenuOption5
 			// 
@@ -146,6 +156,8 @@
 			pnlMenuOption5.Size = new Size(120, 50);
 			pnlMenuOption5.TabIndex = 6;
 			pnlMenuOption5.Paint += pnlMenuOption_Paint;
+			pnlMenuOption5.MouseEnter += pnlMenuOption_MouseEnter;
+			pnlMenuOption5.MouseLeave += pnlMenuOption_MouseLeave;
 			// 
 			// pnlMenuOption6
 			// 
@@ -157,6 +169,8 @@
 			pnlMenuOption6.Size = new Size(120, 50);
 			pnlMenuOption6.TabIndex = 7;
 			pnlMenuOption6.Paint += pnlMenuOption_Paint;
+			pnlMenuOption6.MouseEnter += pnlMenuOption_MouseEnter;
+			pnlMenuOption6.MouseLeave += pnlMenuOption_MouseLeave;
 			// 
 			// pnlLogo
 			// 

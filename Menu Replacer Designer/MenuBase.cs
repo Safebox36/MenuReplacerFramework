@@ -12,18 +12,30 @@ namespace Menu_Replacer_Designer
 		private Size gameResolution = new(1280, 720);
 		private Bitmap? backgroundImage;// = Properties.Resources.menu_background;
 		private bool useTitle = false;
+		private MenuLogo menuLogo = new();
+		private MenuOptions menuOptions = new();
 
 		[DefaultValue(typeof(Size), "1280, 720")]
-		[Category("Menu")]
+		[Category(" ")]
 		[Description("The resolution of the game window.")]
 		public Size GameResolution { get => gameResolution; set => gameResolution = value; }
 		[DefaultValue(typeof(Bitmap), "")]
-		[Category("Menu")]
+		[Category(" ")]
 		[Description("The background image.")]
-		public Bitmap BackgroundImage { get => backgroundImage; set { if (value == null) { backgroundImage = Properties.Resources.menu_background; } else { backgroundImage = value; } } }
+		public Bitmap BackgroundImage { get => backgroundImage ?? Properties.Resources.menu_background; set => backgroundImage = value; }
 		[DefaultValue(false)]
-		[Category("Menu")]
+		[Category(" ")]
 		[Description("Use a title separate from the background.")]
 		public bool UseTitle { get => useTitle; set => useTitle = value; }
+		[DisplayName("Logo")]
+		[Category(" ")]
+		[Description("The optional logo separate from the background image.")]
+		[TypeConverter(typeof(ExpandableObjectConverter))]
+		public MenuLogo MenuLogo { get => menuLogo; set => menuLogo = value; }
+		[DisplayName("Options")]
+		[Category(" ")]
+		[Description("The menu option buttons.")]
+		[TypeConverter(typeof(ExpandableObjectConverter))]
+		public MenuOptions MenuOptions { get => menuOptions; set => menuOptions = value; }
 	}
 }
