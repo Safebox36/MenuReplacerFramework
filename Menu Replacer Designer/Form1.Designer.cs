@@ -266,6 +266,8 @@
 			MainMenuStrip = mnuStrip;
 			Name = "Form1";
 			Text = "Form1";
+			MouseEnter += Form1_MouseEnter;
+			MouseLeave += Form1_MouseLeave;
 			pnlMenu.ResumeLayout(false);
 			pnlMenu.PerformLayout();
 			flowMenuOptions.ResumeLayout(false);

@@ -11,6 +11,7 @@ namespace Menu_Replacer_Designer
 	{
 		private Size gameResolution = new(1280, 720);
 		private Bitmap? backgroundImage;// = Properties.Resources.menu_background;
+		private Bitmap? cursorImage;
 		private bool useTitle = false;
 		private MenuLogo menuLogo = new();
 		private MenuOptions menuOptions = new();
@@ -23,6 +24,10 @@ namespace Menu_Replacer_Designer
 		[Category(" ")]
 		[Description("The background image.")]
 		public Bitmap BackgroundImage { get => backgroundImage ?? Properties.Resources.menu_background; set => backgroundImage = value; }
+		[DefaultValue(typeof(Bitmap), "")]
+		[Category(" ")]
+		[Description("The cursor image.")]
+		public Bitmap CursorImage { get => cursorImage ?? Properties.Resources.menu_cursor; set => cursorImage = value; }
 		[DefaultValue(false)]
 		[Category(" ")]
 		[Description("Use a title separate from the background.")]

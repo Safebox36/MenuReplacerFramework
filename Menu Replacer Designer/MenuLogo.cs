@@ -42,10 +42,10 @@ namespace Menu_Replacer_Designer
 		[DefaultValue(0)]
 		[Description("The vertical position of the logo.")]
 		public int PositionY { get => positionY; set => positionY = value; }
-		[DefaultValue(1024f)]
+		[DefaultValue(1024)]
 		[Description("The width and cropping of the logo.")]
 		public int Width { get => width; set => width = value; }
-		[DefaultValue(256f)]
+		[DefaultValue(256)]
 		[Description("The height and cropping of the logo.")]
 		public int Height { get => height; set => height = value; }
 		[DefaultValue(1.0f)]

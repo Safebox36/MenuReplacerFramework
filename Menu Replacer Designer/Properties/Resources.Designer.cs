@@ -83,6 +83,16 @@ namespace Menu_Replacer_Designer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap menu_cursor {
+            get {
+                object obj = ResourceManager.GetObject("menu_cursor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap menu_logo {
             get {
                 object obj = ResourceManager.GetObject("menu_logo", resourceCulture);

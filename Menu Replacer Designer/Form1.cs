@@ -6,13 +6,6 @@ namespace Menu_Replacer_Designer
 	{
 		private MenuBase menuBase = new MenuBase();
 		private SizeF resolutionScale = new SizeF(640f / 1280f, 360f / 720f);
-		private Bitmap activeLogo = Properties.Resources.menu_logo;
-		private Bitmap activeOption1 = Properties.Resources.menu_option;
-		private Bitmap activeOption2 = Properties.Resources.menu_option;
-		private Bitmap activeOption3 = Properties.Resources.menu_option;
-		private Bitmap activeOption4 = Properties.Resources.menu_mwse;
-		private Bitmap activeOption5 = Properties.Resources.menu_option;
-		private Bitmap activeOption6 = Properties.Resources.menu_option;
 
 		private bool isMouseOver = false;
 
@@ -45,9 +38,10 @@ namespace Menu_Replacer_Designer
 		private void pnlLogo_Paint(object sender, PaintEventArgs e)
 		{
 			MenuLogo logo = this.menuBase.MenuLogo;
-			Bitmap image = this.menuBase.MenuLogo.Image ?? Properties.Resources.menu_logo;
+			Bitmap image = logo.Image ?? Properties.Resources.menu_logo;
 			((Panel)sender).Size = new((int)Math.Round((logo.Width * logo.Scale) * resolutionScale.Width), (int)Math.Round((logo.Height * logo.Scale) * resolutionScale.Height));
-			((Panel)sender).Location = Helper.AbsolutePosition(this.pnlMenu.Size, ((Panel)sender).Size, new(logo.AbsolutePosAlignX, logo.AbsolutePosAlignY));
+			Point position = Helper.AbsolutePosition(this.pnlMenu.Size, ((Panel)sender).Size, new(logo.AbsolutePosAlignX, logo.AbsolutePosAlignY));
+			((Panel)sender).Location = new(logo.IgnoreLayoutX ? (int)Math.Round(logo.PositionX * resolutionScale.Width) : position.X, logo.IgnoreLayoutY ? (int)Math.Round(logo.PositionY * resolutionScale.Height) : position.Y);
 			((Panel)sender).CreateGraphics().DrawImage(image, new Rectangle(0, 0, ((Panel)sender).Width, ((Panel)sender).Height), new Rectangle(0, 0, logo.Width, logo.Height), GraphicsUnit.Pixel);
 		}
 
@@ -69,7 +63,10 @@ namespace Menu_Replacer_Designer
 
 		private void flowMenuOptions_Paint(object sender, PaintEventArgs e)
 		{
-			((Panel)sender).Location = Helper.AbsolutePosition(this.pnlMenu.Size, ((Panel)sender).Size, new(0.5f, 0.95f));
+			MenuOptions menu = this.menuBase.MenuOptions;
+			((FlowLayoutPanel)sender).FlowDirection = menu.FlowDirection == MenuOptions.EnumFlowDirection.top_to_bottom ? FlowDirection.TopDown : FlowDirection.LeftToRight;
+			Point position = Helper.AbsolutePosition(this.pnlMenu.Size, ((FlowLayoutPanel)sender).Size, new(menu.AbsolutePosAlignX, menu.AbsolutePosAlignY));
+			((FlowLayoutPanel)sender).Location = new(menu.IgnoreLayoutX ? (int)Math.Round(menu.PositionX * resolutionScale.Width) : position.X, menu.IgnoreLayoutY ? (int)Math.Round(menu.PositionY * resolutionScale.Height) : position.Y);
 		}
 
 		private void pnlMenuOption_MouseEnter(object sender, EventArgs e)
@@ -82,6 +79,20 @@ namespace Menu_Replacer_Designer
 		{
 			this.isMouseOver = false;
 			((Panel)sender).Refresh();
+		}
+
+		private void Form1_MouseEnter(object sender, EventArgs e)
+		{
+			this.Cursor = Cursors.Default;
+		}
+
+		private void Form1_MouseLeave(object sender, EventArgs e)
+		{
+			if (this.pnlMenu.ClientRectangle.Contains(this.pnlMenu.PointToClient(Cursor.Position)))
+			{
+				Bitmap cursor = new(this.menuBase.CursorImage, new((int)Math.Round(this.menuBase.CursorImage.Width * resolutionScale.Width), (int)Math.Round(this.menuBase.CursorImage.Height * resolutionScale.Height)));
+				this.Cursor = new(cursor.GetHicon());
+			}
 		}
 	}
 }
