@@ -1,12 +1,6 @@
 ﻿using Pfim;
-using System;
-using System.Collections.Generic;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Menu_Replacer_Designer
 {
@@ -37,7 +31,7 @@ namespace Menu_Replacer_Designer
 			using IImage image = Pfimage.FromFile(fileName);
 			bool widthPow2 = false;
 			bool heightPow2 = false;
-			for (int i = 3; i < 11; i++)
+			for (int i = 3; i < 14; i++)
 			{
 				if (image.Width == Math.Pow(2, i)) widthPow2 = true;
 				if (image.Height == Math.Pow(2, i)) heightPow2 = true;

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Drawing.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Menu_Replacer_Designer
 {
@@ -39,11 +36,13 @@ namespace Menu_Replacer_Designer
 		[Description("Use a title separate from the background.")]
 		public bool UseTitle { get => useTitle; set => useTitle = value; }
 		[DisplayName("Logo")]
+		[JsonProperty("Logo")]
 		[Category(" ")]
 		[Description("The optional logo separate from the background image.")]
 		[TypeConverter(typeof(ExpandableObjectConverter))]
 		public MenuLogo MenuLogo { get => menuLogo; set => menuLogo = value; }
 		[DisplayName("Options")]
+		[JsonProperty("Options")]
 		[Category(" ")]
 		[Description("The menu option buttons.")]
 		[TypeConverter(typeof(ExpandableObjectConverter))]

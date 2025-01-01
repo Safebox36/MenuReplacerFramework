@@ -1,5 +1,7 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace Menu_Replacer_Designer
@@ -75,9 +77,70 @@ namespace Menu_Replacer_Designer
 				DialogResult result = save.ShowDialog();
 				if (result == DialogResult.OK)
 				{
-					string data = JsonConvert.SerializeObject(this.menuBase, Formatting.Indented);
-					data = Regex.Replace(data, @"Image(Over)?"": "".*?\\(Textures.*),", @"Image$1"": ""$2,");
-					FileStream file = File.OpenWrite(save.FileName);
+					JObject dataObject = JObject.FromObject(this.menuBase);
+					dataObject.Remove("GameResolution");
+					dataObject.Remove("BackgroundImage");
+					foreach (JToken prop in dataObject.SelectTokens("Logo").Concat(dataObject.SelectTokens("Options.*")))
+					{
+						if (prop is JObject)
+						{
+							((JObject)prop)["Image"] = Regex.Replace((string)((JObject)prop)["Image"], @".*?\\(Textures.*)", "$1");
+							if (((JObject)prop).ContainsKey("ImageOver"))
+							{
+								((JObject)prop)["ImageOver"] = Regex.Replace((string)((JObject)prop)["ImageOver"], @".*?\\(Textures.*)", "$1");
+							}
+						}
+					}
+					dataObject["Options"]["FlowDirection"] = Enum.GetName(typeof(MenuOptions.EnumFlowDirection), this.menuBase.MenuOptions.FlowDirection);
+					if (this.menuBase.CursorImage == "")
+					{
+						dataObject.Remove("CursorImage");
+					}
+					else
+					{
+						dataObject["CursorImage"] = Regex.Replace((string)dataObject["CursorImage"], @".*?\\(Textures.*)", "$1");
+					}
+					if (this.menuBase.UseTitle)
+					{
+						if (this.menuBase.MenuLogo.IgnoreLayoutX)
+						{
+							dataObject.SelectToken("Logo.AbsolutePosAlignX").Parent.Remove();
+						}
+						else
+						{
+							dataObject.SelectToken("Logo.PositionX").Parent.Remove();
+						}
+						if (this.menuBase.MenuLogo.IgnoreLayoutY)
+						{
+							dataObject.SelectToken("Logo.AbsolutePosAlignY").Parent.Remove();
+						}
+						else
+						{
+							dataObject.SelectToken("Logo.PositionY").Parent.Remove();
+						}
+					}
+					else
+					{
+						dataObject.Remove("Logo");
+					}
+					if (this.menuBase.MenuOptions.IgnoreLayoutX)
+					{
+						dataObject.SelectToken("Options.AbsolutePosAlignX").Parent.Remove();
+					}
+					else
+					{
+						dataObject.SelectToken("Options.PositionX").Parent.Remove();
+					}
+					if (this.menuBase.MenuOptions.IgnoreLayoutY)
+					{
+						dataObject.SelectToken("Options.AbsolutePosAlignY").Parent.Remove();
+					}
+					else
+					{
+						dataObject.SelectToken("Options.PositionY").Parent.Remove();
+					}
+					string data = JsonConvert.SerializeObject(dataObject, Formatting.Indented);
+					FileStream file = File.Create(save.FileName);
 					StreamWriter stream = new(file);
 					stream.Write(data);
 					stream.Close();
@@ -146,6 +209,8 @@ namespace Menu_Replacer_Designer
 				}
 				this.undoStack.Push(this.menuBase.Clone());
 				if (this.undoStack.Count == 2) this.mnuUndo.Enabled = true;
+				this.redoStack.Clear();
+				this.mnuRedo.Enabled = false;
 			}
 			this.pnlMenu.Refresh();
 		}
@@ -181,7 +246,7 @@ namespace Menu_Replacer_Designer
 		{
 			MenuOptions menu = this.menuBase.MenuOptions;
 			((FlowLayoutPanel)sender).FlowDirection = menu.FlowDirection == MenuOptions.EnumFlowDirection.top_to_bottom ? FlowDirection.TopDown : FlowDirection.LeftToRight;
-			Point position = Helper.AbsolutePosition(this.pnlMenu.Size, ((FlowLayoutPanel)sender).Size, new(menu.AbsolutePosAlignX, menu.AbsolutePosAlignY));
+			Point position = Helper.AbsolutePosition(this.pnlMenu.Size, ((FlowLayoutPanel)sender).Size, new(menu.AbsolutePosAlignX, -menu.AbsolutePosAlignY));
 			((FlowLayoutPanel)sender).Location = new(menu.IgnoreLayoutX ? (int)Math.Round(menu.PositionX * resolutionScale.Width) : position.X, menu.IgnoreLayoutY ? (int)Math.Round(menu.PositionY * resolutionScale.Height) : position.Y);
 		}
 
