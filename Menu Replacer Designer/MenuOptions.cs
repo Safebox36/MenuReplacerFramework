@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Menu_Replacer_Designer
 {
-	internal class MenuOptions
+	internal class MenuOptions : ICloneable
 	{
-		internal class Option
+		internal class Option : ICloneable
 		{
 			private string img = "";
 			private string imgOver = "";
@@ -50,6 +50,24 @@ namespace Menu_Replacer_Designer
 			[Description("The scale of the button.")] 
 			public float Scale { get => scale; set => scale = value; }
 
+			[EditorBrowsable(EditorBrowsableState.Never)]
+			protected Bitmap DefaultImage { get => defaultImg; set => defaultImg = value; }
+
+			[EditorBrowsable(EditorBrowsableState.Never)]
+			protected Bitmap DefaultImageOver { get => defaultImgOver; set => defaultImgOver = value; }
+
+			public object Clone()
+			{
+				Option option = new(this.defaultImg, this.defaultImgOver);
+				option.img = this.img;
+				option.imgOver = this.imgOver;
+				option.border = this.border;
+				option.width = this.width;
+				option.height = this.height;
+				option.scale = this.scale;
+				return option;
+			}
+
 			public override string ToString()
 			{
 				return "";
@@ -67,6 +85,18 @@ namespace Menu_Replacer_Designer
 			public new float Scale { get => base.Scale; set => base.Scale = value; }
 
 			public OptionModConfig(Bitmap img, Bitmap imgOver) : base(img, imgOver) { this.Width = 256; }
+
+			public new object Clone()
+			{
+				OptionModConfig option = new(this.DefaultImage, this.DefaultImageOver);
+				option.Image = this.Image;
+				option.ImageOver = this.ImageOver;
+				option.Border = this.Border;
+				option.Width = this.Width;
+				option.Height = this.Height;
+				option.Scale = this.Scale;
+				return option;
+			}
 		}
 
 		internal enum EnumFlowDirection
@@ -123,7 +153,26 @@ namespace Menu_Replacer_Designer
 		public Option Credits { get => optCredits; set => optCredits = value; }
 		[TypeConverter(typeof(ExpandableObjectConverter))]
 		public Option ExitGame { get => optExitGame; set => optExitGame = value; }
-		
+
+		public object Clone()
+		{
+			MenuOptions menuOptions = new();
+			menuOptions.absolutePosAlignX = this.absolutePosAlignX;
+			menuOptions.absolutePosAlignY = this.absolutePosAlignY;
+			menuOptions.ignoreLayoutX = this.ignoreLayoutX;
+			menuOptions.ignoreLayoutY = this.ignoreLayoutY;
+			menuOptions.positionX = this.positionX;
+			menuOptions.positionY = this.positionY;
+			menuOptions.flowDirection = this.flowDirection;
+			menuOptions.optNewGame = (Option)this.optNewGame.Clone();
+			menuOptions.optLoadGame = (Option)this.optLoadGame.Clone();
+			menuOptions.optOptions = (Option)this.optOptions.Clone();
+			menuOptions.optModConfig = (OptionModConfig)this.optModConfig.Clone();
+			menuOptions.optCredits = (Option)this.optCredits.Clone();
+			menuOptions.optExitGame = (Option)this.optExitGame.Clone();
+			return menuOptions;
+		}
+
 		public override string ToString()
 		{
 			return "";

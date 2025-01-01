@@ -9,7 +9,7 @@ using System.Windows.Forms.Design;
 
 namespace Menu_Replacer_Designer
 {
-	internal class MenuLogo
+	internal class MenuLogo : ICloneable
 	{
 		private string image = "";
 		private float absolutePosAlignX = 0.5f;
@@ -57,6 +57,23 @@ namespace Menu_Replacer_Designer
 		[DefaultValue(1280)]
 		[Description("The minimum resolution the game window can be before the logo gets resized.")]
 		public int MinScale { get => minScale; set => minScale = value; }
+
+		public object Clone()
+		{
+			MenuLogo menuLogo = new();
+			menuLogo.image = this.image;
+			menuLogo.absolutePosAlignX = this.absolutePosAlignX;
+			menuLogo.absolutePosAlignY = this.absolutePosAlignY;
+			menuLogo.ignoreLayoutX = this.ignoreLayoutX;
+			menuLogo.ignoreLayoutY = this.ignoreLayoutY;
+			menuLogo.positionX = this.positionX;
+			menuLogo.positionY = this.positionY;
+			menuLogo.width = this.width;
+			menuLogo.height = this.height;
+			menuLogo.scale = this.scale;
+			menuLogo.minScale = this.minScale;
+			return menuLogo;
+		}
 
 		public override string ToString()
 		{

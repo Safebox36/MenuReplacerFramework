@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			propsAll = new PropertyGrid();
 			pnlMenu = new Panel();
 			flowMenuOptions = new FlowLayoutPanel();
@@ -43,6 +44,7 @@
 			mnuNewMenu = new ToolStripMenuItem();
 			mnuOpenMenu = new ToolStripMenuItem();
 			mnuSaveMenu = new ToolStripMenuItem();
+			mnuSaveMenuJson = new ToolStripMenuItem();
 			mnuCloseMenu = new ToolStripMenuItem();
 			mnuEdit = new ToolStripMenuItem();
 			mnuUndo = new ToolStripMenuItem();
@@ -58,7 +60,7 @@
 			propsAll.Margin = new Padding(3, 3, 12, 12);
 			propsAll.Name = "propsAll";
 			propsAll.PropertySort = PropertySort.Categorized;
-			propsAll.Size = new Size(256, 360);
+			propsAll.Size = new Size(320, 360);
 			propsAll.TabIndex = 0;
 			propsAll.ToolbarVisible = false;
 			propsAll.PropertyValueChanged += propsAll_PropertyValueChanged;
@@ -193,7 +195,7 @@
 			// 
 			// mnuFile
 			// 
-			mnuFile.DropDownItems.AddRange(new ToolStripItem[] { mnuNewMenu, mnuOpenMenu, mnuSaveMenu, mnuCloseMenu });
+			mnuFile.DropDownItems.AddRange(new ToolStripItem[] { mnuNewMenu, mnuOpenMenu, mnuSaveMenu, mnuSaveMenuJson, mnuCloseMenu });
 			mnuFile.Name = "mnuFile";
 			mnuFile.Size = new Size(37, 20);
 			mnuFile.Text = "&File";
@@ -203,32 +205,44 @@
 			mnuNewMenu.Image = Properties.Resources.menu_new;
 			mnuNewMenu.ImageScaling = ToolStripItemImageScaling.None;
 			mnuNewMenu.Name = "mnuNewMenu";
-			mnuNewMenu.Size = new Size(185, 22);
-			mnuNewMenu.Text = "&New Menu Replacer";
+			mnuNewMenu.ShortcutKeys = Keys.Control | Keys.N;
+			mnuNewMenu.Size = new Size(267, 22);
+			mnuNewMenu.Text = "&New";
 			// 
 			// mnuOpenMenu
 			// 
 			mnuOpenMenu.Image = Properties.Resources.menu_open;
 			mnuOpenMenu.ImageScaling = ToolStripItemImageScaling.None;
 			mnuOpenMenu.Name = "mnuOpenMenu";
-			mnuOpenMenu.Size = new Size(185, 22);
-			mnuOpenMenu.Text = "&Open Menu Replacer";
+			mnuOpenMenu.ShortcutKeys = Keys.Control | Keys.O;
+			mnuOpenMenu.Size = new Size(267, 22);
+			mnuOpenMenu.Text = "&Open Menu Replacer (.mnu)";
 			// 
 			// mnuSaveMenu
 			// 
-			mnuSaveMenu.Image = Properties.Resources.menu_save;
+			mnuSaveMenu.Image = Properties.Resources.menu_save_mnu;
 			mnuSaveMenu.ImageScaling = ToolStripItemImageScaling.None;
 			mnuSaveMenu.Name = "mnuSaveMenu";
-			mnuSaveMenu.Size = new Size(185, 22);
-			mnuSaveMenu.Text = "&Save Menu Replacer";
+			mnuSaveMenu.ShortcutKeys = Keys.Control | Keys.S;
+			mnuSaveMenu.Size = new Size(267, 22);
+			mnuSaveMenu.Text = "&Save Menu Replacer (.mnu)";
+			// 
+			// mnuSaveMenuJson
+			// 
+			mnuSaveMenuJson.Image = Properties.Resources.menu_save;
+			mnuSaveMenuJson.Name = "mnuSaveMenuJson";
+			mnuSaveMenuJson.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+			mnuSaveMenuJson.Size = new Size(267, 22);
+			mnuSaveMenuJson.Text = "S&ave Menu (.json)";
 			// 
 			// mnuCloseMenu
 			// 
 			mnuCloseMenu.Image = Properties.Resources.menu_close;
 			mnuCloseMenu.ImageScaling = ToolStripItemImageScaling.None;
 			mnuCloseMenu.Name = "mnuCloseMenu";
-			mnuCloseMenu.Size = new Size(185, 22);
-			mnuCloseMenu.Text = "&Close Menu Replacer";
+			mnuCloseMenu.ShortcutKeys = Keys.Control | Keys.Q;
+			mnuCloseMenu.Size = new Size(267, 22);
+			mnuCloseMenu.Text = "&Close";
 			// 
 			// mnuEdit
 			// 
@@ -239,18 +253,22 @@
 			// 
 			// mnuUndo
 			// 
+			mnuUndo.Enabled = false;
 			mnuUndo.Image = Properties.Resources.menu_undo;
 			mnuUndo.ImageScaling = ToolStripItemImageScaling.None;
 			mnuUndo.Name = "mnuUndo";
-			mnuUndo.Size = new Size(103, 22);
+			mnuUndo.ShortcutKeys = Keys.Control | Keys.Z;
+			mnuUndo.Size = new Size(174, 22);
 			mnuUndo.Text = "Undo";
 			// 
 			// mnuRedo
 			// 
+			mnuRedo.Enabled = false;
 			mnuRedo.Image = Properties.Resources.menu_redo;
 			mnuRedo.ImageScaling = ToolStripItemImageScaling.None;
 			mnuRedo.Name = "mnuRedo";
-			mnuRedo.Size = new Size(103, 22);
+			mnuRedo.ShortcutKeys = Keys.Control | Keys.Shift | Keys.Z;
+			mnuRedo.Size = new Size(174, 22);
 			mnuRedo.Text = "Redo";
 			// 
 			// Form1
@@ -263,9 +281,13 @@
 			Controls.Add(pnlMenu);
 			Controls.Add(propsAll);
 			Controls.Add(mnuStrip);
+			Icon = (Icon)resources.GetObject("$this.Icon");
 			MainMenuStrip = mnuStrip;
+			MaximizeBox = false;
+			MinimizeBox = false;
 			Name = "Form1";
-			Text = "Form1";
+			StartPosition = FormStartPosition.CenterScreen;
+			Text = "Menu Replacer Designer";
 			MouseEnter += Form1_MouseEnter;
 			MouseLeave += Form1_MouseLeave;
 			pnlMenu.ResumeLayout(false);
@@ -298,5 +320,6 @@
 		private Panel pnlMenuOption4;
 		private Panel pnlMenuOption5;
 		private Panel pnlMenuOption6;
+		private ToolStripMenuItem mnuSaveMenuJson;
 	}
 }

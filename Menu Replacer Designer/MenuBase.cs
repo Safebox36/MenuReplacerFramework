@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Menu_Replacer_Designer
 {
-	internal class MenuBase
+	internal class MenuBase : ICloneable
 	{
+		private const string version = "2025-01-01";
 		private Size gameResolution = new(1280, 720);
 		private string backgroundImage = "";
 		private string cursorImage = "";
@@ -17,6 +18,8 @@ namespace Menu_Replacer_Designer
 		private MenuLogo menuLogo = new();
 		private MenuOptions menuOptions = new();
 
+		[Browsable(false)]
+		public string Version { get => version; }
 		[DefaultValue(typeof(Size), "1280, 720")]
 		[Category(" ")]
 		[Description("The resolution of the game window.")]
@@ -45,5 +48,17 @@ namespace Menu_Replacer_Designer
 		[Description("The menu option buttons.")]
 		[TypeConverter(typeof(ExpandableObjectConverter))]
 		public MenuOptions MenuOptions { get => menuOptions; set => menuOptions = value; }
+
+		public object Clone()
+		{
+			MenuBase menuBase = new();
+			menuBase.gameResolution = this.gameResolution;
+			menuBase.backgroundImage = this.backgroundImage;
+			menuBase.cursorImage = this.cursorImage;
+			menuBase.useTitle = this.useTitle;
+			menuBase.menuLogo = (MenuLogo)this.menuLogo.Clone();
+			menuBase.menuOptions = (MenuOptions)this.menuOptions.Clone();
+			return menuBase;
+		}
 	}
 }

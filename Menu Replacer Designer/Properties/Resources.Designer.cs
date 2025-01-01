@@ -61,6 +61,16 @@ namespace Menu_Replacer_Designer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Favicon {
+            get {
+                object obj = ResourceManager.GetObject("Favicon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap menu_background {
@@ -176,6 +186,16 @@ namespace Menu_Replacer_Designer.Properties {
         internal static System.Drawing.Bitmap menu_save {
             get {
                 object obj = ResourceManager.GetObject("menu_save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap menu_save_mnu {
+            get {
+                object obj = ResourceManager.GetObject("menu_save_mnu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

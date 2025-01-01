@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Menu_Replacer_Designer
 {
@@ -7,6 +8,8 @@ namespace Menu_Replacer_Designer
 	{
 		private MenuBase menuBase = new MenuBase();
 		private SizeF resolutionScale = new SizeF(640f / 1280f, 360f / 720f);
+		private Stack undoStack = new Stack();
+		private Stack redoStack = new Stack();
 
 		private bool isMouseOver = false;
 
@@ -14,8 +17,57 @@ namespace Menu_Replacer_Designer
 		{
 			InitializeComponent();
 			this.propsAll.SelectedObject = menuBase;
+			this.undoStack.Push(menuBase.Clone());
 
+			this.mnuNewMenu.Click += (s, e) =>
+			{
+				this.menuBase = new MenuBase();
+				this.resolutionScale = new(640f / 1280f, 360f / 720f);
+				this.isMouseOver = false;
+				this.pnlMenu.BackgroundImage = Properties.Resources.menu_background;
+				this.pnlLogo.Visible = false;
+				this.propsAll.SelectedObject = this.menuBase;
+				this.propsAll.Refresh();
+			};
+			this.mnuOpenMenu.Click += (s, e) =>
+			{
+				OpenFileDialog open = new();
+				open.Filter = "JSON | *.json";
+				open.FileName = "sb_menu.json";
+				DialogResult result = open.ShowDialog();
+				if (result == DialogResult.OK)
+				{
+					FileStream file = File.OpenRead(open.FileName);
+					StreamReader stream = new(file);
+					string data = stream.ReadToEnd();
+					stream.Close();
+					file.Close();
+					this.menuBase = JsonConvert.DeserializeObject<MenuBase>(data);
+					this.propsAll.SelectedObject = this.menuBase;
+					this.resolutionScale = new(640f / this.menuBase.GameResolution.Width, 360f / this.menuBase.GameResolution.Height);
+					Bitmap image = Helper.ConvertDDSTGA(this.menuBase.BackgroundImage) ?? Properties.Resources.menu_background;
+					this.pnlMenu.BackgroundImage = Bitmap.FromHbitmap(image.GetHbitmap());
+					this.pnlLogo.Visible = this.menuBase.UseTitle;
+					this.pnlMenu.Refresh();
+				}
+			};
 			this.mnuSaveMenu.Click += (s, e) =>
+			{
+				SaveFileDialog save = new();
+				save.Filter = "Menu Replacer | *.mnu";
+				save.FileName = "sb_menu.mnu";
+				DialogResult result = save.ShowDialog();
+				if (result == DialogResult.OK)
+				{
+					string data = JsonConvert.SerializeObject(this.menuBase);
+					FileStream file = File.OpenWrite(save.FileName);
+					StreamWriter stream = new(file);
+					stream.Write(data);
+					stream.Close();
+					file.Close();
+				}
+			};
+			this.mnuSaveMenuJson.Click += (s, e) =>
 			{
 				SaveFileDialog save = new();
 				save.Filter = "JSON | *.json";
@@ -24,11 +76,53 @@ namespace Menu_Replacer_Designer
 				if (result == DialogResult.OK)
 				{
 					string data = JsonConvert.SerializeObject(this.menuBase, Formatting.Indented);
+					data = Regex.Replace(data, @"Image(Over)?"": "".*?\\(Textures.*),", @"Image$1"": ""$2,");
 					FileStream file = File.OpenWrite(save.FileName);
 					StreamWriter stream = new(file);
 					stream.Write(data);
 					stream.Close();
 					file.Close();
+				}
+			};
+			this.mnuCloseMenu.Click += (s, e) =>
+			{
+				this.Close();
+			};
+
+			this.mnuUndo.Click += (s, e) =>
+			{
+				if (this.undoStack.Count > 1)
+				{
+					this.redoStack.Push(this.undoStack.Pop());
+					this.menuBase = (MenuBase)((MenuBase)this.undoStack.Peek()).Clone();
+
+					this.resolutionScale = new(640f / this.menuBase.GameResolution.Width, 360f / this.menuBase.GameResolution.Height);
+					Bitmap image = Helper.ConvertDDSTGA(this.menuBase.BackgroundImage) ?? Properties.Resources.menu_background;
+					this.pnlMenu.BackgroundImage = Bitmap.FromHbitmap(image.GetHbitmap());
+					this.pnlLogo.Visible = this.menuBase.UseTitle;
+					this.propsAll.SelectedObject = this.menuBase;
+					this.pnlMenu.Refresh();
+
+					if (this.undoStack.Count == 1) this.mnuUndo.Enabled = false;
+					if (this.redoStack.Count == 1) this.mnuRedo.Enabled = true;
+				}
+			};
+			this.mnuRedo.Click += (s, e) =>
+			{
+				if (this.redoStack.Count > 0)
+				{
+					this.undoStack.Push(this.redoStack.Pop());
+					this.menuBase = (MenuBase)((MenuBase)this.undoStack.Peek()).Clone();
+
+					this.resolutionScale = new(640f / this.menuBase.GameResolution.Width, 360f / this.menuBase.GameResolution.Height);
+					Bitmap image = Helper.ConvertDDSTGA(this.menuBase.BackgroundImage) ?? Properties.Resources.menu_background;
+					this.pnlMenu.BackgroundImage = Bitmap.FromHbitmap(image.GetHbitmap());
+					this.pnlLogo.Visible = this.menuBase.UseTitle;
+					this.propsAll.SelectedObject = this.menuBase;
+					this.pnlMenu.Refresh();
+
+					if (this.redoStack.Count == 0) this.mnuRedo.Enabled = false;
+					if (this.undoStack.Count == 2) this.mnuUndo.Enabled = true;
 				}
 			};
 		}
@@ -40,17 +134,19 @@ namespace Menu_Replacer_Designer
 				switch (e.ChangedItem.Label)
 				{
 					case "GameResolution":
-						resolutionScale = new(640f / ((Size)e.ChangedItem.Value).Width, 360f / ((Size)e.ChangedItem.Value).Height);
+						this.resolutionScale = new(640f / ((Size)e.ChangedItem.Value).Width, 360f / ((Size)e.ChangedItem.Value).Height);
 						break;
 					case "BackgroundImage":
 						Bitmap image = Helper.ConvertDDSTGA(this.menuBase.BackgroundImage) ?? Properties.Resources.menu_background;
 						this.pnlMenu.BackgroundImage = Bitmap.FromHbitmap(image.GetHbitmap());
 						break;
 					case "UseTitle":
-				this.pnlLogo.Visible = (bool)e.ChangedItem.Value;
-				break;
+						this.pnlLogo.Visible = (bool)e.ChangedItem.Value;
+					break;
+				}
+				this.undoStack.Push(this.menuBase.Clone());
+				if (this.undoStack.Count == 2) this.mnuUndo.Enabled = true;
 			}
-		}
 			this.pnlMenu.Refresh();
 		}
 
