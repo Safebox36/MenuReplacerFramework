@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.Design;
 
 namespace Menu_Replacer_Designer
 {
 	internal class MenuLogo
 	{
-		private Bitmap? image;
+		private string image = "";
 		private float absolutePosAlignX = 0.5f;
 		private float absolutePosAlignY = 0.1f;
 		private bool ignoreLayoutX = false;
@@ -21,9 +23,10 @@ namespace Menu_Replacer_Designer
 		private float scale = 1.0f;
 		private int minScale = 1280;
 
-		[DefaultValue(typeof(Bitmap), "")]
+		[DefaultValue("")]
 		[Description("The image for the logo.")]
-		public Bitmap Image { get => image ?? Properties.Resources.menu_logo; set => image = value; }
+		[Editor(typeof(ImageNameEditor), typeof(UITypeEditor))]
+		public string Image { get => image; set => image = value; }
 		[DefaultValue(0.5f)]
 		[Description("The horizontal alignment of the logo.")]
 		public float AbsolutePosAlignX { get => absolutePosAlignX; set => absolutePosAlignX = Math.Clamp(value, 0.0f, 1.0f); }

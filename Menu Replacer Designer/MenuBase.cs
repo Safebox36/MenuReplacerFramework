@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,8 @@ namespace Menu_Replacer_Designer
 	internal class MenuBase
 	{
 		private Size gameResolution = new(1280, 720);
-		private Bitmap? backgroundImage;// = Properties.Resources.menu_background;
-		private Bitmap? cursorImage;
+		private string backgroundImage = "";
+		private string cursorImage = "";
 		private bool useTitle = false;
 		private MenuLogo menuLogo = new();
 		private MenuOptions menuOptions = new();
@@ -20,14 +21,16 @@ namespace Menu_Replacer_Designer
 		[Category(" ")]
 		[Description("The resolution of the game window.")]
 		public Size GameResolution { get => gameResolution; set => gameResolution = value; }
-		[DefaultValue(typeof(Bitmap), "")]
+		[DefaultValue("")]
 		[Category(" ")]
 		[Description("The background image.")]
-		public Bitmap BackgroundImage { get => backgroundImage ?? Properties.Resources.menu_background; set => backgroundImage = value; }
-		[DefaultValue(typeof(Bitmap), "")]
+		[Editor(typeof(ImageNameEditor), typeof(UITypeEditor))]
+		public string BackgroundImage { get => backgroundImage; set => backgroundImage = value; }
+		[DefaultValue("")]
 		[Category(" ")]
 		[Description("The cursor image.")]
-		public Bitmap CursorImage { get => cursorImage ?? Properties.Resources.menu_cursor; set => cursorImage = value; }
+		[Editor(typeof(ImageNameEditor), typeof(UITypeEditor))]
+		public string CursorImage { get => cursorImage; set => cursorImage = value; }
 		[DefaultValue(false)]
 		[Category(" ")]
 		[Description("Use a title separate from the background.")]

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 
 namespace Menu_Replacer_Designer
@@ -13,6 +14,23 @@ namespace Menu_Replacer_Designer
 		{
 			InitializeComponent();
 			this.propsAll.SelectedObject = menuBase;
+
+			this.mnuSaveMenu.Click += (s, e) =>
+			{
+				SaveFileDialog save = new();
+				save.Filter = "JSON | *.json";
+				save.FileName = "sb_menu.json";
+				DialogResult result = save.ShowDialog();
+				if (result == DialogResult.OK)
+				{
+					string data = JsonConvert.SerializeObject(this.menuBase, Formatting.Indented);
+					FileStream file = File.OpenWrite(save.FileName);
+					StreamWriter stream = new(file);
+					stream.Write(data);
+					stream.Close();
+					file.Close();
+				}
+			};
 		}
 
 		private void propsAll_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -25,21 +43,23 @@ namespace Menu_Replacer_Designer
 						resolutionScale = new(640f / ((Size)e.ChangedItem.Value).Width, 360f / ((Size)e.ChangedItem.Value).Height);
 						break;
 					case "BackgroundImage":
-						this.pnlMenu.BackgroundImage = Bitmap.FromHbitmap(this.menuBase.BackgroundImage.GetHbitmap());
+						Bitmap image = Helper.ConvertDDSTGA(this.menuBase.BackgroundImage) ?? Properties.Resources.menu_background;
+						this.pnlMenu.BackgroundImage = Bitmap.FromHbitmap(image.GetHbitmap());
 						break;
 					case "UseTitle":
-						this.pnlLogo.Visible = (bool)e.ChangedItem.Value;
-						break;
-				}
+				this.pnlLogo.Visible = (bool)e.ChangedItem.Value;
+				break;
 			}
+		}
 			this.pnlMenu.Refresh();
 		}
 
 		private void pnlLogo_Paint(object sender, PaintEventArgs e)
 		{
 			MenuLogo logo = this.menuBase.MenuLogo;
-			Bitmap image = logo.Image ?? Properties.Resources.menu_logo;
-			((Panel)sender).Size = new((int)Math.Round((logo.Width * logo.Scale) * resolutionScale.Width), (int)Math.Round((logo.Height * logo.Scale) * resolutionScale.Height));
+			Bitmap image = Helper.ConvertDDSTGA(logo.Image) ?? Properties.Resources.menu_logo;
+			float minScale = this.menuBase.GameResolution.Width < logo.MinScale ? (float)this.menuBase.GameResolution.Width / (float)logo.MinScale : 1f;
+			((Panel)sender).Size = new((int)Math.Round((logo.Width * logo.Scale) * (resolutionScale.Width * minScale)), (int)Math.Round((logo.Height * logo.Scale) * (resolutionScale.Height * minScale)));
 			Point position = Helper.AbsolutePosition(this.pnlMenu.Size, ((Panel)sender).Size, new(logo.AbsolutePosAlignX, logo.AbsolutePosAlignY));
 			((Panel)sender).Location = new(logo.IgnoreLayoutX ? (int)Math.Round(logo.PositionX * resolutionScale.Width) : position.X, logo.IgnoreLayoutY ? (int)Math.Round(logo.PositionY * resolutionScale.Height) : position.Y);
 			((Panel)sender).CreateGraphics().DrawImage(image, new Rectangle(0, 0, ((Panel)sender).Width, ((Panel)sender).Height), new Rectangle(0, 0, logo.Width, logo.Height), GraphicsUnit.Pixel);
@@ -48,7 +68,7 @@ namespace Menu_Replacer_Designer
 		private void pnlMenuOption_Paint(object sender, PaintEventArgs e)
 		{
 			MenuOptions.Option option = Helper.GetOptionByKey(this.menuBase.MenuOptions, ((Panel)sender).Name);
-			Bitmap image = this.isMouseOver ? (option.ImageOver ?? Properties.Resources.menu_option_over) : (option.Image ?? Properties.Resources.menu_option);
+			Bitmap image = this.isMouseOver ? (Helper.ConvertDDSTGA(option.ImageOver) ?? Properties.Resources.menu_option_over) : (Helper.ConvertDDSTGA(option.Image) ?? Properties.Resources.menu_option);
 			((Panel)sender).Size = new((int)Math.Round((option.Width * option.Scale) * resolutionScale.Width), (int)Math.Round((option.Height * option.Scale) * resolutionScale.Height));
 			((Panel)sender).CreateGraphics().DrawImage(image, new Rectangle(0, 0, ((Panel)sender).Width, ((Panel)sender).Height), new Rectangle(0, 0, option.Width, option.Height), GraphicsUnit.Pixel);
 		}
@@ -56,7 +76,7 @@ namespace Menu_Replacer_Designer
 		private void pnlMenuOption4_Paint(object sender, PaintEventArgs e)
 		{
 			MenuOptions.OptionModConfig option = this.menuBase.MenuOptions.ModConfig;
-			Bitmap image = this.isMouseOver ? (option.ImageOver ?? Properties.Resources.menu_mwse_over) : (option.Image ?? Properties.Resources.menu_mwse);
+			Bitmap image = this.isMouseOver ? (Helper.ConvertDDSTGA(option.ImageOver) ?? Properties.Resources.menu_mwse_over) : (Helper.ConvertDDSTGA(option.Image) ?? Properties.Resources.menu_mwse);
 			((Panel)sender).Size = new((int)Math.Round((option.Width * option.Scale) * resolutionScale.Width), (int)Math.Round((option.Height * option.Scale) * resolutionScale.Height));
 			((Panel)sender).CreateGraphics().DrawImage(image, new Rectangle(0, 0, ((Panel)sender).Width, ((Panel)sender).Height), new Rectangle(0, 0, option.Width, option.Height), GraphicsUnit.Pixel);
 		}
@@ -90,7 +110,8 @@ namespace Menu_Replacer_Designer
 		{
 			if (this.pnlMenu.ClientRectangle.Contains(this.pnlMenu.PointToClient(Cursor.Position)))
 			{
-				Bitmap cursor = new(this.menuBase.CursorImage, new((int)Math.Round(this.menuBase.CursorImage.Width * resolutionScale.Width), (int)Math.Round(this.menuBase.CursorImage.Height * resolutionScale.Height)));
+				Bitmap image = Helper.ConvertDDSTGA(this.menuBase.CursorImage) ?? Properties.Resources.menu_cursor;
+				Bitmap cursor = new(image, new((int)Math.Round(image.Width * resolutionScale.Width), (int)Math.Round(image.Height * resolutionScale.Height)));
 				this.Cursor = new(cursor.GetHicon());
 			}
 		}

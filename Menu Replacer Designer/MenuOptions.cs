@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,8 @@ namespace Menu_Replacer_Designer
 	{
 		internal class Option
 		{
-			private Bitmap? img;
-			private Bitmap? imgOver;
+			private string img = "";
+			private string imgOver = "";
 			private Padding border;
 			private int width = 120;
 			private int height = 50;
@@ -28,12 +29,14 @@ namespace Menu_Replacer_Designer
 				this.defaultImgOver = imgOver;
 			}
 
-			[DefaultValue(typeof(Bitmap), "")]
+			[DefaultValue("")]
 			[Description("The image for the button.")]
-			public Bitmap Image { get => img ?? defaultImg; set => img = value; }
-			[DefaultValue(typeof(Bitmap), "")]
-			[Description("The image for the button when hovered over.")] 
-			public Bitmap ImageOver { get => imgOver ?? defaultImgOver; set => imgOver = value; }
+			[Editor(typeof(ImageNameEditor), typeof(UITypeEditor))]
+			public string Image { get => img; set => img = value; }
+			[DefaultValue("")]
+			[Description("The image for the button when hovered over.")]
+			[Editor(typeof(ImageNameEditor), typeof(UITypeEditor))]
+			public string ImageOver { get => imgOver; set => imgOver = value; }
 			[DefaultValue(typeof(Padding), "0, 0, 0, 0")]
 			[Description("The border around the button.")] 
 			public Padding Border { get => border; set => border = value; }
@@ -55,8 +58,8 @@ namespace Menu_Replacer_Designer
 
 		internal class OptionModConfig : Option
 		{
-			public new Bitmap Image { get => base.Image; set => base.Image = value; }
-			public new Bitmap ImageOver { get => base.ImageOver; set => base.ImageOver = value; }
+			public new string Image { get => base.Image; set => base.Image = value; }
+			public new string ImageOver { get => base.ImageOver; set => base.ImageOver = value; }
 			public new Padding Border { get => base.Border; set => base.Border = value; }
 			[DefaultValue(256)]
 			public new int Width { get => base.Width; set => base.Width = value; }
